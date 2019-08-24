@@ -1,29 +1,29 @@
 A Football Manager Game
 -----------------------
 
-There are leagues
+- There are leagues
 
-Every league has multiple teams
+- Every league has multiple teams
 
-Each team has many players and a single manager
+- Each team has many players and a single manager
 
-Team plays with each other in random rounds
+- Team plays with each other in random rounds
 
-Every player has there skill level
+- Every player has there skill level
 
-Based on the skill level teams have rating
+- Based on the skill level teams have rating
 
-Team wins or losses based on their ratings
+- Team wins or losses based on their ratings
 
-All the rankings are updated in the ladderboard
+- All the rankings are updated in the ladderboard
 
-All team has starting budget
+- All team has starting budget
 
-Every win gives random prize money
+- Every win gives random prize money
 
-A manager can trade players from the free agent market
+- A manager can trade players from the free agent market
 
-More updates will come soon...
+*More updates will come soon...
 
 HAVE FUN! 
 
