@@ -1,0 +1,25 @@
+Football manager
+
+- manage players, hire fire, look at stats
+- play games with our players
+- season, team
+- visualisation
+
+
+CLASSES
+- Manager
+- Teams
+- Leagues
+- Players
+	- Skills
+	- Salary
+- Games
+
+====
+TODO
+====
+
+1. Add randomization on win/loss logic, right now it is just winning team having higher rating
+	you could also add score line.
+2. Make draw as well. Distribute prize. 
+3. Update player ratings/team ratings after rounds based on win/losses from other team
