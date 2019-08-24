@@ -23,7 +23,7 @@ A Football Manager Game
 
 - A manager can trade players from the free agent market
 
-*More updates will come soon...
+More updates will come soon...
 
 HAVE FUN! 
 
