@@ -1,4 +1,5 @@
 import random, copy
+from helpers import goals_scored
 
 class Team:
 	"""
@@ -64,19 +65,28 @@ class Game:
 		Away team won
 		"""
 		print("play begins.")
-		# Insert game here
+		goals_by_home_team = goals_scored(self.home_team.rating())
+		goals_by_away_team = goals_scored(self.away_team.rating())
+
+		print(f"Home team scored {goals_by_home_team}")
+		print(f"Away team scored {goals_by_away_team}")
+
 		print("play ends.")
 
-		# TODO: Generate random number  
-		# based on following formula:
-		# rating * x + rating
-		# whoever gets more, wins.
-		if self.home_team.rating() > self.away_team.rating():
-			print(f"{self.home_team} wins")
-			self.home_team_won = True
+		if goals_by_home_team == goals_by_away_team:
+			if self.home_team.rating() > self.away_team.rating():
+				print(f"Match Draw. {self.home_team} wins based on rating.")
+				self.home_team_won = True
+			else:
+				print(f"Match Draw. {self.away_team} wins based on rating.")
+				self.away_team_won = True
 		else:
-			print(f"{self.away_team} wins")
-			self.away_team_won = True
+			if goals_by_home_team > goals_by_away_team:
+				print(f"{self.home_team} wins by {goals_by_home_team} - {goals_by_away_team}")
+				self.home_team_won = True
+			else:
+				print(f"{self.home_team} wins by {goals_by_away_team} - {goals_by_home_team}")
+				self.away_team_won = True
 
 
 class League:

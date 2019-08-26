@@ -91,14 +91,3 @@ class TeamManager:
 		# Now add each player to there new list
 		self.team.players.append(player_from_market)
 		self.league.players.append(player_from_team)
-
-"""
-1.40 hours of that YT channel
-Automatic Time Tracking using Python
-Git Page
-explore more on system design
-Coding problem solve
-Understand football manager again.
-ENJOY YOUR DAY.
-LOVE YOUR WORK.
-"""
