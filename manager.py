@@ -21,19 +21,29 @@ class TeamManager:
 		print(f"You manage {self.team}")
 		print("Good Luck.")
 
+
+	def get_team_status(self):
+		print("")
+		print(f"Your team is {self.team}")
+		print(f"""Your team status out of {self.league.round_played} round(s):
+			Played {self.team.wins + self.team.draw + self.team.losses} game(s)
+			{self.team.wins} win(s)
+			{self.team.draw} draw(s)
+			{self.team.losses} loss(es)""")
+		
+		print(f"You currently have ${self.team.money}")
+		print(f"Your team weekly salary is ${self.team.weekly_salary()}.")		
+		print("")
+
+
 	def manage(self):
 		"""
 		Before every round we can
 		make changes as a manager.
 		"""
 		self.finished = False
-		print("")
-		print(f"Your team is {self.team}")
-		print(f"You have {self.team.wins} wins out of {self.league.round_played} games.")
 		
-		print(f"You currently have ${self.team.money}")
-		print(f"Your team weekly salary is ${self.team.weekly_salary()}.")		
-		print("")
+		self.get_team_status()
 
 		while not self.finished:
 			self.print_menu()

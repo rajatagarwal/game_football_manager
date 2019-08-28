@@ -44,6 +44,10 @@ def main():
 		first_league.play_round()
 	print("Season ends...")
 	
+	print("*" * 30)
+	print("Your final score card.")
+	manager.get_team_status()
+	print("*" * 30)
 
 
 if __name__ == "__main__":
