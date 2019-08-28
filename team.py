@@ -13,6 +13,7 @@ class Team:
 		self.players = []
 
 		self.wins = 0
+		self.draw = 0
 		self.losses = 0
 
 		# budget at the beginning
@@ -74,13 +75,10 @@ class Game:
 		print("play ends.")
 
 		if goals_by_home_team == goals_by_away_team:
-			if self.home_team.rating() > self.away_team.rating():
-				print(f"Match Draw. {self.home_team} wins based on rating.")
-				self.home_team_won = True
-			else:
-				print(f"Match Draw. {self.away_team} wins based on rating.")
-				self.away_team_won = True
+			# Game draw
+			print(f"Game between {self.home_team} and {self.away_team} is draw with {goals_by_home_team} - {goals_by_away_team} score.")
 		else:
+			# Got result
 			if goals_by_home_team > goals_by_away_team:
 				print(f"{self.home_team} wins by {goals_by_home_team} - {goals_by_away_team}")
 				self.home_team_won = True
@@ -159,15 +157,27 @@ class League:
 			print("")
 			print(f"{game.home_team} won {prize_amount}.")
 			print("")
-		else:
+		elif game.away_team_won:
 			# away team won
 			game.away_team.wins += 1
 			game.home_team.losses += 1
 			# add prize money out of max 200000
-			game.away_team.money += round(20000 * random.random())
+			game.away_team.money += prize_amount
 			print("")
 			print(f"{game.away_team} won {prize_amount}.")
 			print("")
+		else:
+			game.away_team.draw += 1
+			game.home_team.draw += 1
+
+			# Distribute prize money to both
+			game.home_team.money += prize_amount // 2
+			game.away_team.money += prize_amount // 2
+
+			print("")
+			print(f"Both {game.home_team} and {game.away_team} won {prize_amount // 2}.")
+			print("")
+
 
 		game.home_team.pay_players()
 		game.away_team.pay_players()
