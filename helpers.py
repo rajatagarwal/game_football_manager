@@ -18,17 +18,13 @@ def goals_scored(rating):
 	return int(( rating * random.randint(1,5) / rating ))
 
 
-# def adjust_ratings(rating, result):
-# 	"""
-# 	Logic to adjust rating based on the result
-
-# 	"""
-# 	if away.won:
-# 		if away.rating > home.rating:
-# 			diff = away.rating - home.rating
-# 			# send positive number, which need to be added to the team
-# 			return diff/22
-# 		else:
-# 			# high rating team lost to low rating team. more reward and penalty
-# 			return diff/11 from higher team
-# 			and may be diff/22 for lower team
+def elo_rating(opponents_elo, wins, losses, games):
+	"""
+	https://en.wikipedia.org/wiki/Elo_rating_system
+	
+	Performance rating = Total of opponent's rating + 400 * (win - losses)
+	                     -------------------------------------------------
+	                                      Total Games
+	""" 
+	rating = (opponents_elo + (400 * (wins - losses))) // games
+	return rating

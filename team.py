@@ -1,5 +1,5 @@
 import random, copy
-from helpers import goals_scored
+from helpers import goals_scored, elo_rating
 
 class Team:
 	"""
@@ -16,8 +16,12 @@ class Team:
 		self.draw = 0
 		self.losses = 0
 
+		self.rating = 1000
+		self.opponents_elo = []
+
 		# budget at the beginning
 		self.money = 1000000
+
 
 
 	def weekly_salary(self):
@@ -30,18 +34,18 @@ class Team:
 	def pay_players(self):
 		self.money -= self.weekly_salary()
 
-	def rating(self):
-		"""
-		What is the rating of the team
-		"""
-		rating = 0
-		for player in self.players:
-			rating += player.skill
-		return rating
+	# def rating(self):
+	# 	"""
+	# 	What is the rating of the team
+	# 	"""
+	# 	rating = 0
+	# 	for player in self.players:
+	# 		rating += player.skill
+	# 	return rating  // self.weightage
 
 
 	def __str__(self):
-		return f"{self.name}-{self.rating()}"
+		return f"{self.name}-{self.rating}"
 
 
 class Game:
@@ -66,8 +70,8 @@ class Game:
 		Away team won
 		"""
 		print("play begins.")
-		goals_by_home_team = goals_scored(self.home_team.rating())
-		goals_by_away_team = goals_scored(self.away_team.rating())
+		goals_by_home_team = goals_scored(self.home_team.rating)
+		goals_by_away_team = goals_scored(self.away_team.rating)
 
 		print(f"Home team scored {goals_by_home_team}")
 		print(f"Away team scored {goals_by_away_team}")
@@ -86,6 +90,11 @@ class Game:
 				print(f"{self.home_team} wins by {goals_by_away_team} - {goals_by_home_team}")
 				self.away_team_won = True
 
+		# Updating away team elo list
+		self.home_team.opponents_elo.append(self.away_team.rating)
+		self.away_team.opponents_elo.append(self.home_team.rating)
+
+		
 
 class League:
 	"""
@@ -130,6 +139,7 @@ class League:
 			game = Game(self, home_team, away_team)
 			game.play()
 			self.resolve_game(game)
+			self.adjust_elo(game)
 
 		print("Round ends...")
 		print("")
@@ -148,6 +158,7 @@ class League:
 
 	def resolve_game(self, game):
 		prize_amount = round(200000 * random.random())
+		
 		if game.home_team_won:
 			# home team won
 			game.home_team.wins += 1
@@ -157,6 +168,7 @@ class League:
 			print("")
 			print(f"{game.home_team} won {prize_amount}.")
 			print("")
+		
 		elif game.away_team_won:
 			# away team won
 			game.away_team.wins += 1
@@ -166,7 +178,9 @@ class League:
 			print("")
 			print(f"{game.away_team} won {prize_amount}.")
 			print("")
+		
 		else:
+			# draw
 			game.away_team.draw += 1
 			game.home_team.draw += 1
 
@@ -181,3 +195,25 @@ class League:
 
 		game.home_team.pay_players()
 		game.away_team.pay_players()
+
+	def adjust_elo(self, game):
+		home_opponent_elo = sum(game.home_team.opponents_elo)
+		home_wins = game.home_team.wins
+		home_losses = game.home_team.losses
+		home_draw = game.home_team.draw
+		home_total_games = home_wins + home_losses + home_draw
+		home_rating = elo_rating(home_opponent_elo, home_wins, home_losses, home_total_games)
+
+		game.home_team.rating = home_rating
+
+		print(f"New home rating {home_rating}")
+
+		away_opponent_elo = sum(game.away_team.opponents_elo)
+		away_wins = game.away_team.wins
+		away_losses = game.away_team.losses
+		away_draw = game.away_team.draw
+		away_total_games = away_wins + away_losses + away_draw
+		away_rating = elo_rating(away_opponent_elo, away_wins, away_losses, away_total_games)
+
+		game.away_team.rating = away_rating
+		print(f"New away rating {away_rating}")
